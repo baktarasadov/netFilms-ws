@@ -129,7 +129,7 @@
  */
 import { Router } from "express";
 import express from 'express';
-import { getAllFavorites } from "../controllers/favoriteController";
+import { deleteFavorite, getAllFavorites, getFavorite, saveFavorite, updateFavorite } from "../controllers/favoriteController";
 
 const favoriteRoute: Router = express.Router();
 
@@ -145,5 +145,9 @@ const favoriteRoute: Router = express.Router();
  */
 const path: string = "/favorites"
 favoriteRoute.get(`${path}/all`, getAllFavorites);
+favoriteRoute.post(`${path}/save`, saveFavorite);
+favoriteRoute.get(`${path}/get/:id`, getFavorite);
+favoriteRoute.delete(`${path}/delete/:id`, deleteFavorite);
+favoriteRoute.patch(`${path}/update/:id`, updateFavorite);
 
 export default favoriteRoute;

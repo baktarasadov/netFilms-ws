@@ -1,34 +1,33 @@
-import mongoose from "mongoose";
-import { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface Favorite extends Document {
-    favoriteName: String;
-    movies: { moveId: string; img: string, title: string }[];
+    favoriteName: string;
+    movies: { movieId: string; img: string; title: string }[];
 }
 
 const favoriteSchema: Schema<Favorite> = new mongoose.Schema({
     favoriteName: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     movies: [
         {
-            moveId: {
+            movieId: {
                 type: String,
                 required: true,
-                unique: true
+                unique: true,
             },
             img: {
                 type: String,
-                required: true
+                required: true,
             },
             title: {
                 type: String,
-                required: true
-            }
-        }
-    ]
-})
+                required: true,
+            },
+        },
+    ],
+});
 
-export default mongoose.models.Todo || mongoose.model<Favorite>('Favorite', favoriteSchema);
+export default mongoose.models.Favorite || mongoose.model<Favorite>('Favorite', favoriteSchema);
