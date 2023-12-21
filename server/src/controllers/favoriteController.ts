@@ -84,7 +84,8 @@ export async function updateFavorite(request: Request, response: Response<IRespo
         if (!favorite) {
             return response.status(404).json({ success: false, error: "Favorite not found!" });
         }
-        const updatedData: IFavorite | null = await Favorite.findByIdAndUpdate(id, { ...request.body });
+        await Favorite.findByIdAndUpdate(id, { ...request.body });
+        const updatedData: IFavorite | null = await Favorite.findById(id);
         return response.status(200).json({ success: true, data: updatedData as IFavorite });
     } catch (error: any) {
         if (error.name === 'MongoServerError' && error.code === 11000) {
