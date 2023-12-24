@@ -49,10 +49,10 @@ export async function registerUser(request: Request, response: Response<IRespons
             return response.status(400).json({ success: false, error: validation.error.details.map((err) => err.message) });
         }
 
-        const existingUser = await Auth.findOne({ email });
-        if (existingUser) {
-            return response.status(400).json({ success: false, error: 'Email is already registered' });
-        }
+        // const existingUser = await Auth.findOne({ email });
+        // if (existingUser) {
+        //     return response.status(400).json({ success: false, error: 'Email is already registered' });
+        // }
 
         const passwordHash: string = await bcrypt.hash(password, 10);
 
@@ -74,6 +74,7 @@ export async function registerUser(request: Request, response: Response<IRespons
 
     }
 }
+
 
 export async function refreshTokenUser(request: Request, response: Response<IResponse<IAuthResponse>>) {
     const refreshToken: string = request.cookies.refreshToken.split(" ")[1];

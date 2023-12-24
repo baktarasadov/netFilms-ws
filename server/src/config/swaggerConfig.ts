@@ -17,7 +17,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['./src/routes/*.ts'], // Rotalarınızın bulunduğu yolu uygun şekilde güncelleyin
+    apis: ['./src/routes/*.ts'],
 };
 
 const specs = swaggerJsdoc(options);

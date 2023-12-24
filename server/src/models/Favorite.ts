@@ -14,14 +14,12 @@ const favoriteSchema: Schema<Favorite> = new mongoose.Schema({
     favoriteName: {
         type: String,
         required: true,
-        unique: true,
     },
     movies: [
         {
             movieId: {
                 type: String,
                 required: true,
-                unique: true,
             },
             img: {
                 type: String,
