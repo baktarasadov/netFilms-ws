@@ -22,15 +22,17 @@ export async function getAllFavorites(request: Request, response: Response<IResp
 
 export async function saveFavorite(request: Request, response: Response<IResponse<IFavorite>>) {
     try {
-        const { favoriteName, movies } = request.body;
+        const { userId, favoriteName, movies } = request.body;
         await joiFavoriteSchema.validate(request.body, { abortEarly: false });
-        const validation = joiFavoriteSchema.validate({ favoriteName, movies }, { abortEarly: false });
+        const validation = joiFavoriteSchema.validate({ userId, favoriteName, movies }, { abortEarly: false });
         if (validation.error) {
             return response.status(400).json({ success: false, error: validation.error.details.map((err) => err.message) });
         }
         const favorite: IFavorite = await Favorite.create(request.body)
         return response.status(201).json({ success: true, data: favorite })
     } catch (error: any) {
+        console.log(error);
+
         if (error.name === 'MongoServerError' && error.code === 11000) {
             const fieldName: string = Object.keys(error.keyValue)[0];
             let errorMessage = `${fieldName.split(".")[0]} value is already in use`;
@@ -45,8 +47,8 @@ export async function saveFavorite(request: Request, response: Response<IRespons
 
 export async function getFavorite(request: Request, response: Response<IResponse<IFavorite>>) {
     try {
-        const { id } = request.params
-        const favorite: IFavorite | null = await Favorite.findById(id);
+        const { userId } = request.query;
+        const favorite: IFavorite | null = await Favorite.findOne({ userId });
 
         if (!favorite) {
             return response.status(404).json({ success: false, error: "Favorite not found!" });

@@ -7,7 +7,8 @@ const joiMovieSchema = Joi.object({
 });
 
 const joiFavoriteSchema = Joi.object({
-    favoriteName: Joi.string().min(3).max(10).required(),
+    userId: Joi.string().required(),
+    favoriteName: Joi.string().min(3).max(20).required(),
     movies: Joi.array().items(joiMovieSchema).required(),
 });
 
